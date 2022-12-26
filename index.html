@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Encriptador</title>
+        <link rel="stylesheet" href="reset.css">
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <header>
+            <img src="Vector.png" class="logo_alura">
+        </header>
+        <main>
+            
+            <div class="primera-parte">
+                <section class="parte-input">
+                    <textarea  placeholder="Ingrese el texto aqui" class="input_principal"></textarea>   
+                    <section class="aviso">
+                        <img src="exclamacion.png"  class="img_exclamacion">
+                        <label class="exclamacion">Solo letras minúsculas,sin acentos ni caracteres especiales</label>
+                    </section>
+                </section>
+                <section class="botones">
+                    <button class="boton-encriptar" onclick="funcion_encriptar()">Encriptar</button><button class="boton-desencriptar" onclick="funcion_desencriptar()">Desencriptar</button>
+                </section>
+                
+                    
+                
+            </div>
+
+            <div class="segunda-parte">
+                <textarea readonly class="salida"></textarea>
+                <div class="elementos-output">
+                    <article class="imagenes-labels">
+                        <label class="primer-label"><br>Ningún mensaje  fue encontrado<br></label>
+                        <label class="segundo-label">Ingresa el texto que desees encriptar o desencriptar<br></label>
+                        
+                    </article>
+                </div>
+                
+                
+                <div>
+                    <button class="boton-output" onclick="copy()">Copiar</button>
+                </div>
+            </section> 
+            
+            
+            
+            
+        </main>
+    </body>
+
+
+</html>
+
+
+<script>
+
+    function mostrar(final){
+        imagenes=document.querySelector(".elementos-output")
+        cuadro=document.querySelector(".salida")
+        boton=document.querySelector(".boton-output")
+        imagenes.style.display="none"
+        boton.style.display="block"
+
+        cuadro.value=final
+    }
+    function comprobar(mensaje){
+        expresion=/[^a-zA-Z0-9 ]/
+        if (mensaje.match(/[A-Z]/)){
+            alert("No se permiten mayúsculas")
+            return false
+        }
+        if (mensaje.match(expresion)){
+            alert("No se permiten caracteres especiales,vuelva a intentarlo")
+            return false
+        }
+        if(mensaje=="" || /[a-z]/.test(mensaje)==false){
+            alert("No se ingresaron datos")
+            return false
+        }
+        return true
+    }
+
+    function funcion_encriptar()
+    {
+       mensaje=document.querySelector(".input_principal").value
+       if(comprobar(mensaje)!=false){
+            final=String()
+            lon=mensaje.length
+            for(i=0;i<lon;i++){
+                switch(mensaje[i]){
+                    case 'e':
+                        final+="enter";
+
+                        break;
+                    case 'a':
+                        final+="ai";
+
+                        break;
+                    case 'i':
+                        final+="imes";
+
+                        break
+
+                    case 'o':
+                        final+="ober";
+                        
+                        break;
+                    case 'u':
+                        final+="ufat";
+                        
+                        break;
+                    default:
+                        final+=mensaje[i]
+
+                }
+                
+            }
+            
+           
+            
+        }
+        mostrar(final)
+    }
+
+    function copy(){
+        var aux = document.createElement("input");
+        aux.setAttribute("value", document.querySelector(".salida").value);
+
+        document.body.appendChild(aux);
+
+        aux.select();
+
+        document.execCommand("copy");
+
+        document.body.removeChild(aux);
+
+    }
+
+    function funcion_desencriptar()
+    {
+        
+        mensaje=document.querySelector(".input_principal").value;
+        if(comprobar(mensaje)!=false){
+            final=""
+            palabras=mensaje.split(" ");
+
+            for(i=0;i<palabras.length;i++)
+            {
+                
+                if(/enter/.test(palabras[i]))
+                {
+                    palabras[i]=palabras[i].replaceAll("enter",'e')
+                    
+                }
+                if(/imes/.test(palabras[i])){
+                    palabras[i]=palabras[i].replaceAll("imes",'i')
+                    
+                }
+                if(/ai/.test(palabras[i])){
+                    palabras[i]=palabras[i].replaceAll("ai",'a')
+                    
+
+                }
+                if(/ober/.test(palabras[i])){
+                    palabras[i]=palabras[i].replaceAll("ober",'o')
+                    
+                }
+                if(/ufat/.test(palabras[i])){
+                    palabras[i]=palabras[i].replaceAll("ufat",'u')
+                    
+                }
+
+            
+                final+=palabras[i]+" "
+            }
+            
+            mostrar(final)
+
+        }
+    }
+
+</script>
